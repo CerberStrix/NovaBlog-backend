@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import multer from 'multer';
 import cors from 'cors';
+import * as dotenv from 'dotenv'
 
 import DBroutes from './routes/DBroutes.js';
 import { usersRoutes } from './routes/usersRoutes.js'
@@ -11,9 +12,10 @@ import { registerValidation, loginValidation, postCreateValidation } from './val
 import { checkAuth, handleValidationErrors } from './middleware/index.js';
 import { UserController, PostController } from './controllers/index.js'
 
+dotenv.config();
 mongoose.set('strictQuery', true);
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(process.env.MONGODB_URI || DBroutes.devDB)
   .then(() => console.log("DB ok"))
   .catch((err) => console.log('DB Error', err));
 
