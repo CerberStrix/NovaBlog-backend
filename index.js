@@ -13,7 +13,7 @@ import { UserController, PostController } from './controllers/index.js'
 
 mongoose.set('strictQuery', true);
 mongoose
-  .connect(DBroutes.devDB)
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log("DB ok"))
   .catch((err) => console.log('DB Error', err));
 
@@ -51,7 +51,7 @@ app.delete(postsRoutes.routeById, checkAuth, PostController.remove);
 app.patch(postsRoutes.routeById, checkAuth, postCreateValidation, handleValidationErrors, PostController.update);
 app.get(postsRoutes.tags, PostController.getLastTags);
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
   if (err) {
     return console.log(err);
   }
